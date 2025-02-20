@@ -1,0 +1,33 @@
+/*
+When ever we visit different website we see html element on screen , even we dont see effectively, each element is a box in itself. And css box model includes content itself, padding, border, and margin.
+
+
+*/
+
+div{
+    height: 200px;
+    width: 200px;
+}
+
+p{
+    margin: 0;
+}
+
+.first{
+    background-color: yellow;
+    padding: 20px;
+    border: 10px solid black;
+}
+
+.second{
+    background-color: green;
+    border: solid black;
+    border-width: 20px 10px;
+    margin-left: 260px;
+}
+
+.third{
+    background-color: blue;
+    border: 10px solid black;
+    margin-left: 40px;
+}
