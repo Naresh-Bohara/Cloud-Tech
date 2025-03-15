@@ -108,6 +108,11 @@ body {
     background-color: var(--btn-hover-bg-color);
 }
 
+.task-list {
+    max-height: 300px; 
+    overflow-y: auto;  
+}
+
 .task-list ul {
     list-style: none;
     margin-top: 20px;
