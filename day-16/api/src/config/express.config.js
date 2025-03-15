@@ -5,6 +5,9 @@ require("./db.config");
 const router = require("./todo.config");
 const application = express();
 
+const methodOverride = require("method-override");
+application.use(methodOverride("_method"));
+
 // Set EJS as the view engine
 application.set('view engine', 'ejs');
 

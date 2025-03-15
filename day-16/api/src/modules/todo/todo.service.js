@@ -37,6 +37,30 @@ class TodoService {
             throw exception
         }
     }
+
+    getTodoById = async (id) => {
+        try {
+            return await TodoModel.findById(id);
+        } catch (exception) {
+            throw exception;
+        }
+    };
+
+    updateTodo = async (id, data) => {
+        try {
+            return await TodoModel.findByIdAndUpdate(id, data, { new: true });
+        } catch (exception) {
+            throw exception;
+        }
+    };
+
+    deleteTodo = async (id) => {
+        try {
+            return await TodoModel.findByIdAndDelete(id);
+        } catch (exception) {
+            throw exception;
+        }
+    };
 }
 
 const todoSvc = new TodoService();

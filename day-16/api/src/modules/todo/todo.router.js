@@ -5,8 +5,11 @@ const todoCtrl = require("./todo.controller");
 
 todoRouter = Router();
 
-todoRouter.get("/new", todoCtrl.add)
 todoRouter.post("/", bodyValidator(createTodoDTO), todoCtrl.create);
 todoRouter.get("/", todoCtrl.getAll)
+todoRouter.get("/new", todoCtrl.add)
+todoRouter.get("/:id/edit", todoCtrl.edit);
+todoRouter.put("/:id", bodyValidator(createTodoDTO), todoCtrl.update);
+todoRouter.delete("/:id", todoCtrl.delete);
 
 module.exports = todoRouter;
