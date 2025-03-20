@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
   age: Number,
 });
 
-// Virtual Property (Full Name Example)
+// Virtual Property (Full Name Example) 
 UserSchema.virtual("isAdult").get(function () {
   return this.age >= 18;
 });
