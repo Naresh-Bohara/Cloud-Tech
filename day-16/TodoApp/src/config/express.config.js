@@ -40,9 +40,9 @@ application.use((req, res, next) => {
 
 // error handler middleware
 application.use((error, req, res, next) => {
-    let statusCode = error.statusCode || HttpStatus.INTERNAL_SERVER_ERROR.statusCode;
-    let message = error.message || HttpStatus.INTERNAL_SERVER_ERROR.message;
-    let status = error.status || HttpStatus.INTERNAL_SERVER_ERROR.status;
+    let statusCode = error.statusCode;
+    let message = error.message;
+    let status = error.status;
     let data = error.detail || null;
 
     res.status(statusCode).json({
