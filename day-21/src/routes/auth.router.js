@@ -21,7 +21,6 @@ authRouter.post("/register", async (req, res) => {
     res.json({ message: "User registered successfully" });
 });
  
-
 authRouter.post("/login", async (req, res) => {
     const { username, password } = req.body;
 
