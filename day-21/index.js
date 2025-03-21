@@ -4,7 +4,7 @@ dotenv.config();
 import http from "http" 
 
 import application from "./src/config/express.config.js";
-
+ 
 const port = process.env.PORT || 9005;
 const host = process.env.HOST || "127.0.0.1";
 
