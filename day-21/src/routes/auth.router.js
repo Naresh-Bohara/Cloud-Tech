@@ -8,7 +8,7 @@ const authRouter = Router();
 const generateToken = (user) => {
     return jwt.sign({ id: user._id, name: user.username }, process.env.JWT_SECRET, { expiresIn: "1h" });
 };
-
+ 
 authRouter.post("/register", async (req, res) => {
     const { username, password } = req.body;
     
