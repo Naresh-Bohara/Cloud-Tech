@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import jwt from "jsonwebtoken";
+import HttpStatus from "../constants/http-status.constants";
 const checkLogin = async(req, res, next) => {
     try{
       let token = req.headers['authorization'] || null;
@@ -25,9 +26,9 @@ const checkLogin = async(req, res, next) => {
 
     }catch(exception){
       if(exception instanceof jwt.TokenExpiredError){
-        next({status:HttpResponseCode.UNAUTHENTICATED, message:exception.message, statusCode:HttpResponse.tokenExpired})
+        next({statusCode:HttpStatus.UNAUTHENTICATED.statusCode, message:exception.message, status:HttpStatus.UNAUTHENTICATED.status})
       }else if(exception instanceof jwt.JsonWebTokenError){
-        next({status:HttpResponseCode.UNAUTHENTICATED, message:exception.message, statusCode:HttpResponse.unauthenticated})
+        next({statusCode:HttpStatus.UNAUTHENTICATED.statusCode, message:exception.message, status:HttpStatus.UNAUTHENTICATED.status})
       }else{
         next(exception)
       }
