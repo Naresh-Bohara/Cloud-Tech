@@ -7,8 +7,8 @@ const authenticateJWT = (req, res, next) => {
     if (!token) return res.status(401).json({ message: "Access Denied" });
     console.log("Token:", token);
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded;
+        const loggedinUser = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = loggedinUser;
         next();
     } catch (error) {
         console.error(error);
