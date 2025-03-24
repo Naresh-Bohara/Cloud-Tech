@@ -9,7 +9,7 @@ const authRouter = Router();
 
 authRouter.post("/register", bodyValidator(userRegisterDTO), authCtrl.register);
 authRouter.post("/login",bodyValidator(loginDTO), authCtrl.login);
-authRouter.get("/profile",checkLogin, authCtrl.getLoggedInUser)
+authRouter.get("/profile",checkLogin,checkPermission(['admin', 'user']), authCtrl.getLoggedInUser)
 authRouter.get("/admin", checkLogin,checkPermission(['admin']), authCtrl.getUsers)
 
 export default authRouter;
