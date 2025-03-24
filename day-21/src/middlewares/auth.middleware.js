@@ -3,12 +3,12 @@ dotenv.config();
 
 import jwt from "jsonwebtoken";
 const authenticateJWT = (req, res, next) => {
-    const token = req.headers.authorization?.split(" ")[2]; 
+    const token = req.headers.authorization?.split(" ").pop(); 
     if (!token) return res.status(401).json({ message: "Access Denied" });
     console.log("Token:", token);
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded;
+        const verified = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = verified;
         next();
     } catch (error) {
         console.error(error);

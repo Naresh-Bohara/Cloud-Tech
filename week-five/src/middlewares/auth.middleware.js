@@ -13,7 +13,8 @@ const checkLogin = async(req, res, next) => {
       const data = jwt.verify(token, process.env.JWT_SECRET)
 
       const user = await UserModel.findOne({_id: data.sub});
-
+console.log(user)
+console.log(data.sub)
       req.loggedInUser = {
         _id: user._id,
         name: user.name,
