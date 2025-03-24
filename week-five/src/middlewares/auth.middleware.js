@@ -1,13 +1,11 @@
-import dotenv from "dotenv";
-dotenv.config();
-
 import jwt from "jsonwebtoken";
-import HttpStatus from "../constants/http-status.constants";
+import HttpStatus from "../constants/http-status.constants.js";
+import UserModel from "../modules/user/user.model.js";
 const checkLogin = async(req, res, next) => {
     try{
       let token = req.headers['authorization'] || null;
       if(!token){
-        throw {status:HttpResponseCode.UNAUTHENTICATED, message:"Please login first.", statusCode:HttpResponse.unauthenticated}
+        throw {statusCode:HttpStatus.UNAUTHENTICATED.statusCode, message:"Please login first.", status: HttpStatus.UNAUTHENTICATED.status}
       }
       token = token.split(" ").pop();
 
