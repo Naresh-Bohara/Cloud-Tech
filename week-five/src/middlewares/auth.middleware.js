@@ -2,18 +2,36 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import jwt from "jsonwebtoken";
-const authenticateJWT = (req, res, next) => {
-    const token = req.headers.authorization?.split(" ")[2]; 
-    if (!token) return res.status(401).json({ message: "Access Denied" });
-    console.log("Token:", token);
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded;
-        next();
-    } catch (error) {
-        console.error(error);
-        res.status(403).json({ message: "Invalid Token" });
-    }
-};
+const checkLogin = async(req, res, next) => {
+    try{
+      let token = req.headers['authorization'] || null;
+      if(!token){
+        throw {status:HttpResponseCode.UNAUTHENTICATED, message:"Please login first.", statusCode:HttpResponse.unauthenticated}
+      }
+      token = token.split(" ").pop();
 
-export default authenticateJWT;
+      //decode and verify
+      const data = jwt.verify(token, process.env.JWT_SECRET)
+
+      const user = await UserModel.findOne({_id: data.sub});
+
+      req.loggedInUser = {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      };
+      next()
+
+    }catch(exception){
+      if(exception instanceof jwt.TokenExpiredError){
+        next({status:HttpResponseCode.UNAUTHENTICATED, message:exception.message, statusCode:HttpResponse.tokenExpired})
+      }else if(exception instanceof jwt.JsonWebTokenError){
+        next({status:HttpResponseCode.UNAUTHENTICATED, message:exception.message, statusCode:HttpResponse.unauthenticated})
+      }else{
+        next(exception)
+      }
+    }
+  };
+
+export default checkLogin;
