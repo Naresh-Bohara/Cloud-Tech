@@ -82,15 +82,19 @@ class AuthController{
         }
       }
 
-      getUsers = (req, res, next)=>{
-        res.json({
-          data: req.loggedInUser,
-          message: "User Profile Fetched.",
-          status: HttpStatus.OK.status,
-          options: null
-        })
-      }
-    
+      getAdmins = async (req, res, next) => {
+        try {
+          const admins = await authSvc.getAdminUsers();
+          res.json({
+            data: admins,
+            message: "Admin users fetched successfully.",
+            status: HttpStatus.OK.status,
+            options: null,
+          });
+        } catch (exception) {
+          next(exception);
+        }
+      };
 }
 
 const authCtrl = new AuthController();

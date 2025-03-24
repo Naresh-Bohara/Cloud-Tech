@@ -48,6 +48,14 @@ class AuthService {
           throw exception;
         }
       };
+
+      getAdminUsers = async () => {
+        try {
+          return await UserModel.find({ role: "admin" });
+        } catch (exception) {
+          throw exception;
+        }
+      };
     
 }
 
