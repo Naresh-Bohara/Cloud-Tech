@@ -5,8 +5,6 @@ const HttpStatus = {
     UNAUTHORIZED: { statusCode: 403, message: "Unauthorized", status: "UNAUTHORIZED" },
     BAD_REQUEST: { statusCode: 400, message: "Bad Request", status: "BAD_REQUEST" },
 
-    tokenExpired: "TOKEN_EXPIRED",
-
     OK:{ statusCode: 200, message: "Success", status: "SUCCESS" }
 }
 
