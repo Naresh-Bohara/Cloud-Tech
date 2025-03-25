@@ -1,14 +1,16 @@
 import HttpStatus from "../../constants/http-status.constants.js";
 import UserModel from "../user/user.model.js";
+import bcrypt from "bcrypt";
 
 class AuthService {
     formatUserRegistrationData = async (req) =>{
         try {
             const data = req.body;
+            const hashedPassword = await bcrypt.hash(data.password, 10); 
             const formattedData = {
                 name: data.name,
                 email: data.email,
-                password: data.password, 
+                password: hashedPassword, 
                 role: data.role || "user",
               };
               return formattedData;
@@ -56,6 +58,10 @@ class AuthService {
           throw exception;
         }
       };
+
+      verifyPassword = async (inputPassword, hashedPassword) => {
+        return await bcrypt.compare(inputPassword, hashedPassword);
+    }
     
 }
 

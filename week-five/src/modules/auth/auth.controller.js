@@ -30,7 +30,8 @@ class AuthController{
             email: email
           })
 
-            if(password === user.password){
+          const isPasswordValid = await authSvc.verifyPassword(password, user.password);
+          if (!isPasswordValid) {
               // login success
               const payload = {
                 sub: user._id,
@@ -78,6 +79,7 @@ class AuthController{
           })
   
         }catch(exception){
+          console.log(exception);
           next(exception)
         }
       }
