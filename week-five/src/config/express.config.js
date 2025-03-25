@@ -29,7 +29,10 @@ const limiter = rateLimit({
 application.use(limiter);
 
 // CSRF Protection Setup
-const csrfProtection = csrf({ cookie: true });
+const csrfProtection = csrf({ 
+    cookie: true, 
+    header: 'CSRF-Token' 
+  });
 application.use(csrfProtection);
 
 // Health check route

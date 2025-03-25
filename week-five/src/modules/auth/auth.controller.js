@@ -23,50 +23,49 @@ class AuthController{
       };
 
 
-      login = async (req, res, next) => {
-        try {
-            const { email, password } = req.body;
-  
-            const user = await authSvc.getUserByFilter({ email: email });
-    
-            const isPasswordValid = await authSvc.verifyPassword(password, user.password);
-    
-            if (isPasswordValid) {
-               
-                const payload = {
-                    sub: user._id,
-                    role: user.role
-                }
-    
-                const token = jwt.sign(payload, process.env.JWT_SECRET, {
-                    expiresIn: '10h',
-                });
-    
-                res.json({
-                    data: {
-                        token: token,
-                        detail: {
-                            _id: user._id,
-                            name: user.name,
-                            email: user.email,
-                            role: user.role,
-                        }
-                    },
-                    message: "Login Success.",
-                    status: HttpStatus.OK.status,
-                    options: null
-                });
-            } else {
-                
-                throw { statusCode: HttpStatus.BAD_REQUEST.statusCode, message: "Credentials don't match.", status: "CREDENTIAL_NOT_MATCH" };
+      login = async(req, res, next)=>{
+        try{
+          const {email, password} = req.body;
+          const user = await authSvc.getUserByFilter({email: email})
+
+          const isPasswordValid = await authSvc.verifyPassword(password, user.password);
+          if (isPasswordValid) {
+              // login success
+              const payload = {
+                sub: user._id,
+                role: user.role
+              }
+
+              const token = jwt.sign(payload, process.env.JWT_SECRET, {
+                expiresIn: '10h', 
+              });
+
+
+              res.json({
+                data: {
+                  token: token,
+                  detail:{
+                    _id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    role: user.role,
+                  }
+                },
+                message: "Login Success.",
+                status: HttpStatus.OK.status,
+                options: null
+              })
+
+            }else{
+              throw {statusCode: HttpStatus.BAD_REQUEST.statusCode, message:"Credential doesn't match.", status: "CREDENTIAL_NOT_MATCH"}
             }
-    
-        } catch (exception) {
-            console.log(exception);
-            next(exception);
+          
+
+        }catch(exception){
+          console.log(exception)
+          next(exception)
         }
     }
-    
 
     getLoggedInUser = (req, res, next)=>{
         try{
