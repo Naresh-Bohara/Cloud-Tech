@@ -16,6 +16,6 @@ const checkPermission = (allowedby)=>{
             }
         }
     }
-} 
+}  
  
 export {checkPermission}
