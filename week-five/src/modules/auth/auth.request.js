@@ -39,7 +39,7 @@ const userRegisterDTO = Joi.object({
         })
 });
 
-
+ 
 // Login DTO schema
 const loginDTO = Joi.object({
     email: Joi.string()
