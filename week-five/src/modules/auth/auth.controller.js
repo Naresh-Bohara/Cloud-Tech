@@ -15,7 +15,7 @@ class AuthController{
             status: HttpStatus.OK.status,
             options:null
           })
-    
+     
         }catch(exception){
           console.log(exception)
           next(exception)
