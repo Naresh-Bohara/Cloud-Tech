@@ -6,14 +6,15 @@ class AuthService {
     formatUserRegistrationData = async (req) =>{
         try {
             const data = req.body;
-            const hashedPassword = await bcrypt.hash(data.password, 10); 
-            const formattedData = {
+            const saltRounds = process.env.SALT_ROUNDS ? parseInt(process.env.SALT_ROUNDS, 10) : 10;
+            const hashedPassword = await bcrypt.hash(data.password, saltRounds); 
+            const formattedData = { 
                 name: data.name,
                 email: data.email,
                 password: hashedPassword, 
                 role: data.role || "user",
               };
-              return formattedData;
+              return formattedData;   
         }catch(exception){
             throw exception;
         }
