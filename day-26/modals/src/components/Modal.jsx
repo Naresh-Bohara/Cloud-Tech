@@ -40,6 +40,7 @@ const Modal = () => {
     <h1>Hey there</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus nisi quas modi! Enim fugiat, eos eaque non ipsum corporis minima.</p>
    </div>
+   
    <div className='h-30% m-44'>
     <h1>Hey there</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus nisi quas modi! Enim fugiat, eos eaque non ipsum corporis minima.</p>
