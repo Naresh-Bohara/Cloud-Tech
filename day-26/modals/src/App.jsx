@@ -10,7 +10,7 @@ const App = () => {
   const closeModal = () => setIsOpen(false);
 
   const handleConfirm = () => {
-    alert("Confirmed!")
+    alert("Confirmed!");
     closeModal();
   };
 
