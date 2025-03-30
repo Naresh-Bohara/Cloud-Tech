@@ -10,7 +10,7 @@ const ShowModal = ({ closeModal, children, handleCloseBtn }) => {
   }, []);
   return ReactDOM.createPortal(
     <>
-      <div className="test">
+      <div className="test"> 
         <div className="modal-wrapper" onClick={closeModal}></div>
         <div className="modal-container">
           {children}

@@ -57,8 +57,8 @@ const MyModal = ({ isOpen, closeModal, title, content, onConfirm }) => {
             </Transition.Child>
           </div>
         </div>
-      </Dialog>
-    </Transition>
+      </Dialog> 
+    </Transition> 
   );
 };
 
