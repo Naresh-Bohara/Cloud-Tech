@@ -14,7 +14,7 @@ const ShowModal = ({ closeModal, children, handleCloseBtn }) => {
         <div className="modal-wrapper" onClick={closeModal}></div>
         <div className="modal-container">
           {children}
-          {handleCloseBtn}
+          {handleCloseBtn} 
         </div>
       </div>
     </>,
