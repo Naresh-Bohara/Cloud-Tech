@@ -18,7 +18,7 @@ application.use(express.json());
 application.use(express.urlencoded({ extended: true }));
 application.use(cookieParser());
 application.use(helmet());
-application.use(cors({ origin: "https://localhost300", credentials: true }));
+application.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
 // Rate Limiting Middleware
 const limiter = rateLimit({

@@ -1,26 +1,53 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { registerUser } from '../redux/authSlice';
-import { useNavigate } from 'react-router-dom';
+import api from '../api/api';
 
 const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    await dispatch(registerUser({ name, email, password }));
-    navigate('/login');
+
+    try {
+      const response = await api.post('api/v1/auth/register', { name, email, password });
+      alert('Registration successful!');
+    } catch (error) {
+      console.error('Registration error:', error);
+      alert('Failed to register');
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-      <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+    <form onSubmit={handleRegister}>
+      <h2>Register</h2>
+      <div>
+        <label>Name</label>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+      </div>
+      <div>
+        <label>Email</label>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+      </div>
+      <div>
+        <label>Password</label>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+      </div>
       <button type="submit">Register</button>
     </form>
   );

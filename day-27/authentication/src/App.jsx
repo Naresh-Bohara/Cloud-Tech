@@ -1,21 +1,32 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setCsrfToken } from './redux/authSlice';
+import api from './api/api';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Profile from './components/Profile';
-import ProtectedRoute from './components/ProtectedRoutes';
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchCsrfToken = async () => {
+      try {
+        const response = await api.get('/csrf-token');
+        dispatch(setCsrfToken(response.data.csrfToken)); 
+      } catch (error) {
+        console.error('Error fetching CSRF token:', error);
+      }
+    };
+
+    fetchCsrfToken();
+  }, [dispatch]);
+
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-      </Routes>
-    </Router>
+    <div className="App">
+      <h1>This is HomePage</h1>
+      <Login />
+      <Register />
+    </div>
   );
 }
 
