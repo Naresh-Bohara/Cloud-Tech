@@ -1,50 +1,55 @@
-import React, { useState } from 'react';
+// src/components/LoginPage.js
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import api from '../api/api';
 import { loginSuccess } from '../redux/authSlice';
+import { getCSRFToken, loginRequest } from '../api/axios';
 
-const Login = () => {
+const LoginPage = () => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const dispatch = useDispatch();
+  const [error, setError] = useState('');
 
-  const handleLogin = async (e) => {
+  useEffect(() => {
+    // Get CSRF token on component mount
+    getCSRFToken();
+  }, []);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await api.post('api/v1/auth/login', { email, password });
-      dispatch(loginSuccess(response.data.data.detail)); // Store user details in Redux
-      alert('Login successful!');
-    } catch (error) {
-      console.error('Login error:', error);
-      alert('Failed to login');
+      const data = { email, password };
+      const response = await loginRequest(data);
+      dispatch(loginSuccess(response.data));
+      localStorage.setItem('token', response.data.token); // Store token in localStorage
+    } catch (err) {
+      setError('Invalid credentials');
     }
   };
 
   return (
-    <form onSubmit={handleLogin}>
-      <h2>Login</h2>
-      <div>
-        <label>Email</label>
+    <div>
+      <h1>Login</h1>
+      {error && <p>{error}</p>}
+      <form onSubmit={handleSubmit}>
         <input
           type="email"
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-      </div>
-      <div>
-        <label>Password</label>
         <input
           type="password"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-      </div>
-      <button type="submit">Login</button>
-    </form>
+        <button type="submit">Login</button>
+      </form>
+    </div>
   );
 };
 
-export default Login;
+export default LoginPage;

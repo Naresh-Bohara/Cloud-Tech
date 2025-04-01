@@ -1,33 +1,33 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setCsrfToken } from './redux/authSlice';
-import api from './api/api';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import * as jwt_decode from 'jwt-decode';
 
-function App() {
+import { loginSuccess } from './redux/authSlice';
+import LoginPage from './pages/Login';
+import ProfilePage from './pages/Profile';
+import AdminPage from './pages/Admin';
+import PrivateRoute from './components/ProtectedRoutes';
+
+const App = () => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const fetchCsrfToken = async () => {
-      try {
-        const response = await api.get('/csrf-token');
-        dispatch(setCsrfToken(response.data.csrfToken)); 
-      } catch (error) {
-        console.error('Error fetching CSRF token:', error);
-      }
-    };
-
-    fetchCsrfToken();
-  }, [dispatch]);
+  const token = localStorage.getItem('token');
+  if (token) {
+    // Decode token and dispatch login
+    const decoded = jwt_decode(token);
+    dispatch(loginSuccess({ token, user: decoded, role: decoded.role }));
+  }
 
   return (
-    <div className="App">
-      <h1>This is HomePage</h1>
-      <Login />
-      <Register />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/profile" element={<PrivateRoute component={ProfilePage} />} />
+        <Route path="/admin" element={<PrivateRoute component={AdminPage} />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;

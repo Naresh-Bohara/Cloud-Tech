@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import api from '../api/api'; // API configuration
+import api from '../api/axios'; // API configuration
 import { logout } from '../redux/authSlice'; // Redux action for logout
 
 const Profile = () => {
@@ -9,7 +9,7 @@ const Profile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const csrfToken = useSelector((state) => state.auth.csrfToken); // Get CSRF token from Redux state
+  const csrfToken = useSelector((state) => state.auth.csrfToken); 
 
   useEffect(() => {
     const token = localStorage.getItem('token');

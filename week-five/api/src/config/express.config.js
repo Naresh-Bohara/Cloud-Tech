@@ -44,7 +44,7 @@ application.use("/health", (request, response) => {
 });
 
 // Send CSRF token to client on the first request
-application.get("/csrf-token", (req, res) => {
+application.get("/api/v1/csrf-token", (req, res) => {
   res.json({
     csrfToken: req.csrfToken(),
   });
