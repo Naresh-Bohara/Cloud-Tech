@@ -16,25 +16,41 @@ export const getCsrfToken = async () => {
 
 // Function to make POST requests with CSRF protection
 export const postWithCsrf = async (url, data) => {
-  const csrfToken = await getCsrfToken();
-  if (!csrfToken) {
-    console.error('CSRF token is missing!');
-    return;
-  }
+  console.log('[postWithCsrf] Initiating request to:', url);
+  
   try {
-    const response = await axios.post(
-      url,
-      data,
-      {
-        headers: {
-          'CSRF-Token': csrfToken, // Add CSRF token to headers
-        },
-        withCredentials: true, // Ensure cookies are sent
-      }
-    );
+    // 1. Get CSRF Token
+    const csrfToken = await getCsrfToken();
+    console.log('[postWithCsrf] CSRF Token:', csrfToken ? 'Received' : 'Missing');
+    
+    if (!csrfToken) {
+      throw new Error('CSRF token is required');
+    }
+
+    // 2. Make the Request
+    console.log('[postWithCsrf] Sending request with data:', data);
+    const response = await axios.post(url, data, {
+      headers: {
+        'CSRF-Token': csrfToken,
+        'Content-Type': 'application/json'
+      },
+      withCredentials: true
+    });
+
+    // 3. Log and Return Response
+    console.log('[postWithCsrf] Request successful:', {
+      status: response.status,
+      data: response.data
+    });
     return response.data;
+
   } catch (error) {
-    console.error('Request failed:', error);
+    console.error('[postWithCsrf] Request failed:', {
+      url,
+      status: error.response?.status,
+      data: error.response?.data,
+      message: error.message
+    });
     throw error;
   }
 };

@@ -13,7 +13,7 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await postWithCsrf('http://localhost:5000/api/v1/user/update', profileData);
+      const response = await postWithCsrf('http://localhost:8080/api/v1/user/update', profileData);
       console.log('Profile updated:', response);
     } catch (error) {
       console.error('Failed to update profile:', error);

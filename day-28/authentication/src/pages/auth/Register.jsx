@@ -6,14 +6,13 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("user");
   const [error, setError] = useState("");
   const { register } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { success, error } = await register(name, email, password, role);
+    const { success, error } = await register(name, email, password); // Removed role
     if (success) {
       navigate("/login");
     } else {
@@ -47,10 +46,6 @@ const Register = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <select value={role} onChange={(e) => setRole(e.target.value)}>
-          <option value="user">User</option>
-          <option value="admin">Admin</option>
-        </select>
         <button type="submit">Register</button>
       </form>
     </div>
