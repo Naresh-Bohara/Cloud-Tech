@@ -2,7 +2,7 @@ import React from "react";
 import { FaStar, FaEdit, FaTrash } from "react-icons/fa";
 import { MdOutlineAddCircle } from "react-icons/md";
 
-const Card = ({ home }) => {
+const Card = ({ home, setInputDiv }) => {
   const data = [
     {
       title: "Complete Documentation",
@@ -73,12 +73,12 @@ const Card = ({ home }) => {
       ))}
 
       {home == true && (
-        <div className="border border-gray-400 rounded-xl p-4 bg-[#cdccdf] flex flex-col justify-center gap-3 items-center h-full hover:scale-105 hover:cursor-pointer transition-all duration-300">
+        <button className="border border-gray-400 rounded-xl p-4 bg-[#cdccdf] flex flex-col justify-center gap-3 items-center h-full hover:scale-105 hover:cursor-pointer transition-all duration-300" onClick={()=>setInputDiv("fixed")}>
           <h2 className="font-semibold text-xl text-gray-700">Add Tasks</h2>
           <span className="text-3xl text-gray-700">
             <MdOutlineAddCircle />
           </span>
-        </div>
+        </button>
       )}
     </div>
   );

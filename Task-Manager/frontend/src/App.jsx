@@ -6,6 +6,7 @@ import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
 import ImportantTasksPage from './pages/ImportantTasksPage'
 import CompletedTasksPage from './pages/CompletedTasksPage'
 import PendingTasksPage from './pages/PendingTasksPage'
+import SignupPage from './pages/SignupPage'
 
 function App() {
 
@@ -20,6 +21,8 @@ function App() {
         <Route path='completed-tasks' element={<CompletedTasksPage/>} />
         <Route path='pending-tasks' element={<PendingTasksPage/>} />
         </Route>
+
+        <Route path='/signup' element={<SignupPage/>}/>
       </Routes>
     </Router>
    </div>

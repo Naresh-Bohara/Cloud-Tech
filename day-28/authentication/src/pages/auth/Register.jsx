@@ -3,50 +3,67 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
 
 const Register = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const { register } = useContext(AuthContext);
   const navigate = useNavigate();
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { success, error } = await register(name, email, password); // Removed role
+    setLoading(true);
+    setError(null);
+
+    const { success, error } = await register(formData.name, formData.email, formData.password);
+
+    setLoading(false);
     if (success) {
       navigate("/login");
     } else {
-      setError(error);
+      setError(error || "Registration failed. Please try again.");
     }
   };
 
   return (
-    <div>
-      <h1>Register</h1>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
+    <div className="register-container">
+      <h2>Register</h2>
+      <form onSubmit={handleSubmit} className="register-form">
         <input
           type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          name="name"
+          placeholder="Full Name"
+          value={formData.name}
+          onChange={handleChange}
           required
         />
         <input
           type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          name="email"
+          placeholder="Email Address"
+          value={formData.email}
+          onChange={handleChange}
           required
         />
         <input
           type="password"
+          name="password"
           placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={formData.password}
+          onChange={handleChange}
           required
         />
-        <button type="submit">Register</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Registering..." : "Register"}
+        </button>
+        {error && <p className="red error-message">{error}</p>}
       </form>
     </div>
   );
