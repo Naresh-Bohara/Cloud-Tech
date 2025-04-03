@@ -7,6 +7,7 @@ import ImportantTasksPage from './pages/ImportantTasksPage'
 import CompletedTasksPage from './pages/CompletedTasksPage'
 import PendingTasksPage from './pages/PendingTasksPage'
 import SignupPage from './pages/SignupPage'
+import LoginPage from './pages/LoginPage'
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
         </Route>
 
         <Route path='/signup' element={<SignupPage/>}/>
+        <Route path='/login' element={<LoginPage/>}/>
       </Routes>
     </Router>
    </div>
