@@ -1,9 +1,23 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Card from '../components/home/Card'
 import { MdOutlineAddCircle } from "react-icons/md";
 import InputData from '../components/mini-component/InputData';
 const AllTasksPage = () => {
-  const [inputDiv, setInputDiv] = useState("hidden")
+   const [inputDiv, setInputDiv] = useState("hidden")
+   const [data, setData] = useState();
+
+     useEffect(()=>{
+          const fetch = async()=>{
+             const response = await axios.get("http://localhost:9005/api/v1/tasks", {
+                  headers
+              })
+           
+              setData(response.data)
+              console.log(response.data)
+          }
+          fetch();
+      })
+
   return (
     <>
     <div>
