@@ -22,8 +22,8 @@ application.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 
 // Rate Limiting Middleware
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 1000, // Limit each IP to 100 requests per windowMs
+  windowMs: 15 * 60 * 100, 
+  max: 100, 
   message: 'Too many requests, please try again later.',
 });
 application.use(limiter);

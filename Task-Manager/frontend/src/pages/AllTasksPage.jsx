@@ -2,9 +2,13 @@ import React, { useEffect, useState } from 'react'
 import Card from '../components/home/Card'
 import { MdOutlineAddCircle } from "react-icons/md";
 import InputData from '../components/mini-component/InputData';
+import axios from 'axios';
 const AllTasksPage = () => {
    const [inputDiv, setInputDiv] = useState("hidden")
    const [data, setData] = useState();
+
+   const headers ={id: localStorage.getItem("id"),
+    authorization: `Bearer ${localStorage.getItem("token")}`}
 
      useEffect(()=>{
           const fetch = async()=>{
@@ -14,9 +18,10 @@ const AllTasksPage = () => {
            
               setData(response.data)
               console.log(response.data)
+              console.log(data)
           }
           fetch();
-      })
+      }, [])
 
   return (
     <>
