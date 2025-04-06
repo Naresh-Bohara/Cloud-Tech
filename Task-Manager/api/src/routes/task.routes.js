@@ -134,7 +134,7 @@ taskRouter.put("/important/:id", checkLogin, async (req, res) => {
         task.important = !task.important;
         await task.save();
 
-        res.json({ message: "Task importance toggled.", task });
+        res.json({ message: "Task importance updated.", task });
     } catch (err) {
         console.error("PUT /important/:id:", err);
         res.status(500).json({ message: "Internal Server Error." });
@@ -158,7 +158,7 @@ taskRouter.put("/completed/:id", checkLogin, async (req, res) => {
         task.complete = !task.complete;
         await task.save();
 
-        res.json({ message: "Task completion toggled.", task });
+        res.json({ message: "Task completion updated.", task });
     } catch (err) {
         console.error("PUT /completed/:id:", err);
         res.status(500).json({ message: "Internal Server Error." });
