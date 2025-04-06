@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { MdChecklist } from "react-icons/md";
+import { MdChecklist, MdOutlineTrendingUp } from "react-icons/md";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { FaExclamationCircle, FaCheckCircle } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
+import { AiOutlinePieChart } from "react-icons/ai";
+
+
 import { useDispatch } from 'react-redux';
 import { authActions } from '../../store/authSlice';
 import axios from 'axios';
@@ -31,6 +34,12 @@ const Sidebar = () => {
             title: "Pending Tasks",
             icon: <IoMdCloseCircleOutline />,
             link: "pending-tasks"
+        },
+
+        {
+            title: "Tasks Progress",
+            icon: <AiOutlinePieChart />,
+            link: "tasks-progress"
         },
     ]
 
@@ -76,7 +85,7 @@ const Sidebar = () => {
                         key={inx} 
                         className='my-2 flex gap-2 items-center hover:bg-gray-300 p-2 rounded transition-all duration-200 '
                     >
-                        <span className='text-xl'>{items.icon}</span>
+                        <span className='text-xl font-bold'>{items.icon}</span>
                         <span className='font-semibold'> {items.title} </span>
                     </Link>
                 ))

@@ -6,6 +6,11 @@ import axios from 'axios';
 const AllTasksPage = () => {
    const [inputDiv, setInputDiv] = useState("hidden")
    const [data, setData] = useState();
+   const [updatedData, setUpdatedData] = useState({
+    id: "", 
+    title:"",
+    description:"",
+  })
 
    const headers ={id: localStorage.getItem("id"),
     authorization: `Bearer ${localStorage.getItem("token")}`}
@@ -16,23 +21,23 @@ const AllTasksPage = () => {
                   headers
               })
            
-              setData(response.data)
-              console.log(response.data)
-              console.log(data)
+              setData(response.data.tasks)
           }
           fetch();
       }, [])
-
+console.log(data)
   return (
     <>
     <div>
       <div className='w-full flex justify-end px-6 py-2 transition-all duration-300'>
       <button onClick={()=>setInputDiv("fixed")} className='text-3xl text-gray-800 hover:text-gray-950'><MdOutlineAddCircle /></button>
       </div>
-      <Card home={true} setInputDiv={setInputDiv}/>
+      {data && <Card home={true} setInputDiv={setInputDiv} data={data} 
+      setUpdatedData={setUpdatedData}/>}
     </div>
 
-    <InputData inputDiv={inputDiv} setInputDiv={setInputDiv}/>
+    <InputData inputDiv={inputDiv} setInputDiv={setInputDiv} updatedData={updatedData} 
+    setUpdatedData={setUpdatedData}/>
     </>
   )
 }

@@ -185,7 +185,7 @@ taskRouter.get("/important", checkLogin, async (req, res) => {
 });
 
 // Get Completed Tasks
-taskRouter.get("/complete", checkLogin, async (req, res) => {
+taskRouter.get("/completed", checkLogin, async (req, res) => {
     const userId = validateUserId(req, res);
     if (!userId) return;
 
@@ -221,5 +221,36 @@ taskRouter.get("/incomplete", checkLogin, async (req, res) => {
         res.status(500).json({ message: "Internal Server Error." });
     }
 });
+
+// Get Task Progress (Total, Completed, Pending)
+taskRouter.get("/progress", checkLogin, async (req, res) => {
+    const userId = validateUserId(req, res);
+    if (!userId) return;
+
+    try {
+        const user = await UserModel.findById(userId).populate({
+            path: "tasks",
+        });
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
+        // Calculate the task counts
+        const totalTasks = user.tasks.length;
+        const completedTasks = user.tasks.filter(task => task.complete).length;
+        const pendingTasks = totalTasks - completedTasks;
+
+        res.json({
+            total: totalTasks,
+            completed: completedTasks,
+            pending: pendingTasks,
+        });
+    } catch (err) {
+        console.error("GET /progress:", err);
+        res.status(500).json({ message: "Internal Server Error." });
+    }
+});
+
 
 export default taskRouter;

@@ -12,6 +12,7 @@ import LoginPage from './pages/LoginPage';
 import LandingPage from './pages/LandingPage'; 
 import { authActions } from './store/authSlice';
 import LoadingComponent from './components/LoadingComponent';
+import TaskProgressPieChart from './pages/TaskProgressPieChart';
 
 const RouteGuard = ({ children, isProtected = false }) => {
   const dispatch = useDispatch();
@@ -51,6 +52,7 @@ function App() {
           <Route path="important-tasks" element={<ImportantTasksPage />} />
           <Route path="completed-tasks" element={<CompletedTasksPage />} />
           <Route path="pending-tasks" element={<PendingTasksPage />} />
+          <Route path="tasks-progress" element={<TaskProgressPieChart />} />
         </Route>
 
         {/* Catch-all route */}

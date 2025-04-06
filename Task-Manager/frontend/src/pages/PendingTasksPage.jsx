@@ -1,8 +1,33 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import Card from '../components/home/Card'
 
 const PendingTasksPage = () => {
+  const [data, setData] = useState([]);
+  
+    const headers = {
+      id: localStorage.getItem("id"),
+      authorization: `Bearer ${localStorage.getItem("token")}`
+    };
+  
+    useEffect(() => {
+      const fetch = async () => {
+        try {
+          const response = await axios.get("http://localhost:9005/api/v1/tasks/incomplete", {
+            headers
+          });
+          setData(response.data.tasks);
+          console.log(response.data.tasks);
+        } catch (err) {
+          console.error("Failed to fetch completed tasks:", err);
+        }
+      };
+      fetch();
+    }, []);
   return (
-    <div>PendingTasksPage</div>
+    <div>
+      <Card home={false} data={data} />
+    </div>
   )
 }
 
