@@ -1,12 +1,13 @@
 import jwt from "jsonwebtoken";
 import UserModel from "../models/user.model.js";
+import HttpStatus from "../constants/http-status.constants.js";
 
 const checkLogin = async (req, res, next) => {
   try {
     const token = req.headers.authorization?.split(" ")[1];
 
     if (!token) {
-      return res.status(401).json({ message: "Unauthorized - Access token required." });
+      return res.status(HttpStatus.UNAUTHENTICATED.statusCode).json({ message: "Unauthorized - Access token required." });
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -14,7 +15,7 @@ const checkLogin = async (req, res, next) => {
     // Fetch user based on decoded token
     const user = await UserModel.findById(decoded.id);
     if (!user) {
-      return res.status(401).json({ message: "Unauthorized - User not found" });
+      return res.status(HttpStatus.UNAUTHENTICATED.statusCode).json({ message: "Unauthorized - User not found" });
     }
 
     req.user = user; 
@@ -23,14 +24,14 @@ const checkLogin = async (req, res, next) => {
     console.error(err);
     
     if (err.name === "TokenExpiredError") {
-      return res.status(401).json({ message: "Session expired, please login again" });
+      return res.status(HttpStatus.UNAUTHENTICATED.statusCode).json({ message: "Session expired, please login again" });
     }
 
     if (err.name === "JsonWebTokenError") {
-      return res.status(401).json({ message: "Invalid token" });
+      return res.status(HttpStatus.UNAUTHENTICATED.statusCode).json({ message: "Invalid token" });
     }
 
-    return res.status(500).json({ message: "Internal server error" });
+    return res.status(HttpStatus.INTERNAL_SERVER_ERROR.statusCode).json({ message: "Internal server error" });
   }
 };
 
