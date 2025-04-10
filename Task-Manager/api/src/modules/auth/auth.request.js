@@ -11,7 +11,7 @@ const userRegisterDTO = Joi.object({
             'string.max': 'Name must not exceed 50 characters.',
             'any.required': 'Name is required.',
         }),
-
+ 
     email: Joi.string()
         .email()
         .required()

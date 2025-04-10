@@ -82,5 +82,5 @@ application.use((error, req, res, next) => {
     options: null,
   });
 });
-
+ 
 export default application;

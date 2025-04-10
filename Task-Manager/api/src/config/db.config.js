@@ -8,7 +8,7 @@ const dbConnect = async () => {
         await mongoose.connect(process.env.MONGODB_URL, {
             dbName: process.env.MONGODB_NAME,
             autoCreate: true,
-            autoIndex: true,
+            autoIndex: true, 
         });
         console.log(`Successfully connected to the database: ${process.env.MONGODB_NAME}`);
     } catch (exception) {
