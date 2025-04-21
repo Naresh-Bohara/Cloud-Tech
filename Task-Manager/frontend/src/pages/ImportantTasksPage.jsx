@@ -8,7 +8,7 @@ const ImportantTasksPage = () => {
   const headers = {
     id: localStorage.getItem("id"),
     authorization: `Bearer ${localStorage.getItem("token")}`
-  };
+  }; 
 
   useEffect(() => {
     const fetch = async () => {
